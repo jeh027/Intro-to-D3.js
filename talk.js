@@ -1,4 +1,4 @@
-import Inspire from "../../slides/talk.js";
+import Inspire from "/slides/talk.js";
 // import "https://colorjs.io/elements/css-color/css-color.js";
 import "https://elements.colorjs.io/src/color-swatch/color-swatch.js";
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
@@ -40,8 +40,8 @@ Inspire.for("iframe.browser[data-result]", iframe => {
 });
 
 // import("https://cdn.jsdelivr.net/npm/wc-mermaid/wc-mermaid.js");
-import("https://prismjs.com/plugins/line-numbers/prism-line-numbers.js");
-
+// import("https://prismjs.com/plugins/line-numbers/prism-line-numbers.js");
+import("https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.js");
 
 
 /* start of animation */
