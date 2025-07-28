@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <title>D3.js Slides</title>
+
+        <link rel="icon" href='images/hdsi.png'/>
+
+        <link href="https://inspirejs.org/inspire.css" rel="stylesheet" />
+        <link href="theme.css" rel="stylesheet" />
+    </head>
+    
+    <body class="language-markup" data-prism-plugins="normalize-whitespace">
+
+        <header id="intro" class="slide">
+            <h1>
+                <div class="label">Lab 5!</div>
+                <img src="images/d3.svg" alt="D3">
+            </h1>
+            <small>
+                DSC 106: Introduction to Data Visualization
+            </small>
+        </header>
+
+        <article class="slide" id="svg">
+            <header>
+                <h1>What is SVG?</h1>
+            </header>
+
+            <ul class="width">
+                <li>SVG stands for <mark>Scalable Vector Graphics</mark>.</li>
+                <li class="delayed">SVG graphics can be directly embedded into HTML pages using the &lt;svg&gt; element to draw lines, curves, points, etc (ex: for data visualizations).</li>
+                <li class="delayed">SVG graphics are scalable, and don't lose any quality when zoomed or resized unlike JPEG and PNG.</li>
+            </ul>
+
+            <details class="notes">
+                <ul>
+                    <li>SVG stands for Scalable Vector Graphics. SVG for graphics is what HTML is for text.</li>
+                    <li>
+                        SVG is used to define vector-based graphics for the Web, which can be directly embedded into HTML pages using the
+                        &lt;svg&gt; tag with CSS and JavaScript compatability on almost all modern browsers.
+                    </li>
+                    <li>
+                        SVG graphics are infinitely scalable, and don't lose any quality if they are zoomed or resized. This is because SVGs use 
+                        mathematical formulas to define shapes (vector format) so the browser can continuously redraw to adjust to new resolution, 
+                        instead of fixed grids of individual pixels (raster format).
+                    </li>
+                </ul>
+            </details>
+        </article>
+
+        <article class="slide" data-type="activity" id="svg-activity">
+            <code class="syntax-breakdown">
+                <p>&lt;svg width="100" height="100"&gt;</p>
+                <div class="indent" data-tooltip="bottom">
+                    <span title="&lt;line&gt;, &lt;rect&gt;, &lt;circle&gt;: Basic shapes">&lt;circle</span>
+                    <span title="cx, cy: Coordinates of the center of the circle">cx="50" cy="50"</span>
+                    <span title="r: Radius of the circle">r="40"</span>
+                    <span title="stroke: Color of the line">stroke="green"</span>
+                    <span title="stroke-width: Width of the line">stroke-width="4"</span>
+                    <span title="fill: Color inside the shape">fill="yellow"</span>
+                    &gt;
+                </div>
+                <p>&lt;/svg&gt;</p>
+            </code>
+        </article>
+
+        <article class="slide" id="d3">
+            <header>
+                <h1>What is D3.js?</h1>
+            </header>
+
+            <ul class="delayed-children width check-marks">
+                <li>D3.js (also known as D3, short for Data-Driven Documents) is a JavaScript library for producing dynamic, interactive data visualizations in web browsers.</li>
+                <li>The D3 library allows us to manipulate elements of a webpage based on data. These elements can be HTML, <mark>SVG</mark>, or Canvas elements.</li>
+                <li>D3 is built on existing web technologies, thus, highly compatible with the Client Side Web Technology Stack (HTML, CSS, and SVG).</li>
+            </ul>
+            
+            <details class="notes">
+                <ul>
+                    <li>
+                        D3 is built on native web standards — SVG, HTML, CSS, and JavaScript — so it does not require proprietary 
+                        plugins and is widely supported in browsers.
+                    </li>
+                    <li>Highly customizable data visualizations compared to Tableau and PowerBI software.</li>
+                    <li>Plotly.js is built on top of D3.js.</li>
+                    <li>Large community and rich <a href="https://d3-graph-gallery.com/">community</a>.</li>
+                </ul>
+        </article>
+
+        <article class="slide language code-labels" id="import">
+            <header>
+                <h1>Importing D3 to your page</h1>
+            </header>
+            
+            <section class="delayed">
+                <pre><code class="language-html">
+                    &lt;script src = "https://d3js.org/d3.v4.min.js""&gt;&lt;/script&gt;
+                </code></pre>
+            </section>
+
+            <section class="delayed">
+                <pre><code class="language-js">
+                    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
+                </code></pre>
+            </section>
+        </article>
+
+        <article class="slide" id="dom">
+            <header>
+                <h1>What is a DOM?</h1>
+            </header>
+
+            <section class="two-columns-framework width">
+                <ul class="delayed-children">
+                    <li>DOM stands for Document Object Model.</li>
+                    <li>DOM refers to the current hierarchical tree structure of HTML elements in memory.</li>
+                    <li>D3 manipulates the DOM by dynamically modifying the content or structure used to render the webpage.</li>
+                </ul>
+                <img class="browser" src="images/dom-diagram.png" alt="" data-url="https://info340.github.io/dom.html#dom-manipulation">
+            </section>
+
+            <details class="notes">
+                <ul>
+                    <li>Emphasize how the DOM is the live state structured tree of objects and nodes in memory.</li>
+                    <li>"Programmatic model of the page’s structure and content as built and modifiable in the browser."</li>
+                    <li>
+                        When D3 manipulates the DOM, these changes don't alter the original source code but updates the browser's internal 
+                        DOM representation that gets rendered (DOM != source code).
+                    </li>
+                    <li>Manipulating the DOM enables interactivity and responsive interfaces.</li>
+                </ul>
+            </details>
+        </article>
+
+
+        <article class="slide" id="data-join">
+            <header>
+                <h1>How to insert data into the DOM using D3?</h1>
+            </header>
+
+            <div class="join-framework max-width">
+                <section class="subjoin-framework">
+                    <div class="stack">
+                        <h2>Start HTML</h2>
+                        <pre><code>
+                            &lt;svg&gt;
+                                &lt;g class="dots"&gt;
+                                    &lt;circle&gt;&lt;/circle&gt;
+                                    &lt;circle&gt;&lt;/circle&gt;
+                                &lt;/g&gt;
+                            &lt;/svg&gt;
+                        </code></pre>
+                    </div>
+        
+                    <div class="arrow-right"></div>
+
+                    <div class="stack">
+                        <h2>End HTML</h2>
+                        <pre><code>
+                            &lt;svg&gt;
+                                &lt;g class="dots"&gt;
+                                    &lt;circle r="10"&gt;&lt;/circle&gt;
+                                    &lt;circle r="20"&gt;&lt;/circle&gt;
+                                &lt;/g&gt;
+                            &lt;/svg&gt;
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section class="delayed subjoin-framework">
+                    <div class="stack">
+                        <h2>✅Selector</h2>
+                        <pre><code class="syntax-breakdown" data-tooltip="top">
+                            <span title="Targets the first DOM element with class dots">variable.select('.dots')</span>
+                            <span title="Selects all existing circle elements">.selectAll('circle')</span>
+                        </code></pre>
+                    </div>
+
+                    <div class="arrow-right"></div>
+
+                    <div class="stack">
+                        <h2>➕Adding</h2>
+                        <pre><code class="syntax-breakdown" data-tooltip="top">
+                            <span title="Binds the circle elements to the data">.data([10, 20, 30, 25, 15])</span>.attr('r', d => d);
+                        </code></pre>
+                    </div>
+                </section>
+            </div>
+
+            <pre class="no-code-label error delayed"> <!-- issue with slide size -->
+                <code>Problem: What if the number of array elements is different from the number of DOM elements? </code>
+            </pre>
+
+            <details class="notes">
+                <ul>
+                    <li>Known as data joins. Essentially ensures that each data point is represented by a DOM element.</li>
+                    <li>Clarify that 'variable' refers to the &lt;g&gt; tag container (const dots = svg.append('g').attr('class', 'dots');).</li>
+                    <li>
+                        Arrays are a way to group values together and simplify repetitive code, since we can write code once that operates on all 
+                        of them in one fell swoop.
+                    </li>
+            </details>
+        </article>
+
+        <article class="slide language code-labels" id="enter-append" data-steps="1">
+            <header>
+                <h1>What if there are more data than DOM elements?</h1>
+            </header>
+
+            <div class="two-columns-framework">
+                <section>
+                    <pre><code class="language-html">
+                        &lt;svg&gt;
+                            &lt;g class="dots"&gt;
+                                &lt;circle <span id="in-4">r="10"</span> &gt;&lt;/circle&gt;
+                                &lt;circle <span id="in-5">r="20"</span> &gt;&lt;/circle&gt;
+                                <span id="in-1">&lt;circle <span id="in-6">r="30"</span> &gt;&lt;/circle&gt;</span>
+                                <span id="in-2">&lt;circle <span id="in-7">r="25"</span> &gt;&lt;/circle&gt;</span>
+                                <span id="in-3">&lt;circle <span id="in-8">r="15"</span> &gt;&lt;/circle&gt;</span>
+                            &lt;/g&gt;
+                        &lt;/svg&gt;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="language-js syntax-breakdown" data-tooltip="top">
+                        variable.select('.dots')
+                                .selectAll('circle')
+                                .data([10, 20, 30, 25, 15])
+                                <span title="Identifies all data points without a corresponding DOM element">.enter()</span>
+                                <span title="Adds a circle element for each unbound data point">.append('circle')</span>
+                                .attr('r', d => d);
+                    </code></pre>
+                </section>
+            </div>
+
+            <button id="myButton1" data-step="1">Animation</button>
+        </article>
+        
+        <article class="slide language code-labels" id="exit-remove" data-steps="1">
+            <header>
+                <h1>What if there are less data than DOM elements?</h1>
+            </header>
+
+            <div class="two-columns-framework">
+                <section>
+                    <pre><code class="language-html">
+                        &lt;svg&gt;
+                            &lt;g class="dots"&gt;
+                                &lt;circle <span id="out-4">r="10"</span>&gt;&lt;/circle&gt;
+                                &lt;circle <span id="out-5">r="20"</span>&gt;&lt;/circle&gt;
+                                <span id="out-3">&lt;circle       &gt;&lt;/circle&gt;</span>
+                                <span id="out-2">&lt;circle       &gt;&lt;/circle&gt;</span>
+                                <span id="out-1">&lt;circle       &gt;&lt;/circle&gt;</span>
+                            &lt;/g&gt;
+                        &lt;/svg&gt;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="language-js syntax-breakdown" data-tooltip="top">
+                        variable.select('.dots')
+                                .selectAll('circle')
+                                .data([10, 20])
+                                <span title="Targets all existing DOM elements that no longer correspond to data">.exit()</span>
+                                <span title="Removes all unused DOM elements">.remove()</span>
+                                .attr('r', d => d);
+                    </code></pre>
+                </section>
+            </div>
+
+            <button id="myButton2" data-step="1">Animation</button>
+        </article>
+
+        <article class="slide language code-labels" id="join">
+            <header>
+                <h1>What if you don't know the number of array items in advance?</h1>
+            </header>
+
+            <div class="two-columns-framework width">
+                <ul class="delayed-children">
+                    <li>In the D3 v5.0+, there is a new method .join() method.</li>
+                    <li>
+                        D3 automatically adds, updates, or removes HTML/SVG elements in order to make the selection 
+                        the same length as the data array.
+                    </li>
+                </ul>
+
+                <section>
+                    <pre><code class="language-js">
+                        variable.select('.dots')
+                            .selectAll('circle')
+                            .data([10, 20, 30, 25, 15])
+                            .join("circle")
+                            .attr('r', d => d);
+                    </code></pre>
+                </section>
+            </div>
+        </article>
+
+        <!-- add scatter plot example created using D3 to show potential and value -->
+        <article class="slide" id="plot" data-type="example">
+            <div id="my_dataviz"></div>
+        </article>
+
+        <footer class="slide" id="end"></footer>
+
+        <!-- imports -->
+        <script src="./talk.js" type="module"></script>
+        <script src="https://inspirejs.org/inspire.mjs" type="module"></script>
+    </body>
+</html>
