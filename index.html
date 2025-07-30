@@ -50,7 +50,7 @@
             </details>
         </article>
 
-        <article class="slide" data-type="activity" id="svg-activity">
+        <article class="slide" data-type="activity" id="html-activity">
             <code class="syntax-breakdown">
                 <p>&lt;svg width="100" height="100"&gt;</p>
                 <div class="indent" data-tooltip="bottom">
@@ -189,7 +189,7 @@
                 </section>
             </div>
 
-            <pre class="no-code-label error delayed"> <!-- issue with slide size -->
+            <pre class="no-code-label error delayed">
                 <code>Problem: What if the number of array elements is different from the number of DOM elements? </code>
             </pre>
 
@@ -230,7 +230,7 @@
                                 .selectAll('circle')
                                 .data([10, 20, 30, 25, 15])
                                 <span title="Identifies all data points without a corresponding DOM element">.enter()</span>
-                                <span title="Adds a circle element for each unbound data point">.append('circle')</span>
+                                <span title="Adds a circle element for each extra data point">.append('circle')</span>
                                 .attr('r', d => d);
                     </code></pre>
                 </section>
@@ -265,7 +265,7 @@
                                 .selectAll('circle')
                                 .data([10, 20])
                                 <span title="Targets all existing DOM elements that no longer correspond to data">.exit()</span>
-                                <span title="Removes all unused DOM elements">.remove()</span>
+                                <span title="Removes all the targeted DOM elements">.remove()</span>
                                 .attr('r', d => d);
                     </code></pre>
                 </section>
@@ -301,8 +301,14 @@
         </article>
 
         <!-- add scatter plot example created using D3 to show potential and value -->
-        <article class="slide" id="plot" data-type="example">
+        <article class="slide" id="interactive-visual">
+            <header>
+                <h1>For example ...</h1>
+            </header>
+
             <div id="my_dataviz"></div>
+
+            <p class="citation">Visual courtesy of D3 Graph Gallery</p>
         </article>
 
         <footer class="slide" id="end"></footer>

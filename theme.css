@@ -78,7 +78,7 @@ html {
 }
 
 .width {
-	max-width: 80vw; /* 70% of the viewport width */
+	max-width: 80vw;
 	padding-left: 10%;
 
 	li {
@@ -274,13 +274,14 @@ mark {
 
 	.subjoin-framework {
 		display: grid;
-		grid-template-columns: 1fr 10em 1fr;
+		grid-template-columns: 1fr 5em 1fr;
 		gap: 1em;
 	}
 
 	.stack {
 		display: grid;
 		grid-template-rows: auto 1fr;
+		justify-content: center;
 	}
 
 	h2 {
@@ -479,6 +480,16 @@ pre.error {
 	}
 }
 
+.citation {
+	position: absolute;
+	bottom: .5rem;
+	right: .8rem;
+	font-size: 40%;
+	font-weight: 500;
+	opacity: .8;
+	margin-bottom: 0.1rem;
+}
+
 /* data steps */
 
 .slide[data-steps] {
@@ -526,9 +537,11 @@ pre.error {
 
 
 .bubbles {
-	stroke-width: 2px;
-	stroke: white;
+	stroke-width: 1px;
+	stroke: black;
+	opacity: .8
 }
+
 .bubbles:hover {
 	stroke: black;
 }
@@ -537,4 +550,5 @@ pre.error {
     position: fixed;
     top: 1em;
 	left: 1em;
+	font-size: xx-large;
 }
